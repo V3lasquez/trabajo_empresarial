@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte de Proveedores</title>
+    <style>
+        .table {
+            background-color: #4591B8;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table th, .table td {
+            padding: 8px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte de Proveedores</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+                <th colspan="3" style="text-align:center">Opciones de manejo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in proveedores %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.direccion }}</td>
+                <td>{{ p.telefono }}</td>
+                <td><a href="edicionproveedor/{{p.id}}" class="btn btn-info">Editar</a></td>
+                <td><a href="eliminarproveedor/{{p.id}}" class="btn btn-danger">Eliminar</a></td>
+                <td><a href="verproducto/{{p.id}}" class="btn btn-info">Ver producto</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+

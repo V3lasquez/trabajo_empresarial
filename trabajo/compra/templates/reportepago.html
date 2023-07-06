@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte de Pagos</title>
+    <style>
+        .table {
+            background-color: #4591B8;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table th, .table td {
+            padding: 8px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte de Pagos</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Fec_pago</th>
+                <th>Descuento</th>
+                <th>Met_pago</th>
+                <th>Num_compra</th>
+                <th>Total</th>
+                <th colspan="2" style="text-align:center">Opciones de manejo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pagos %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.fec_pago }}</td>
+                <td>{{ p.descuento }}</td>
+                <td>{{ p.met_pago }}</td>
+                <td>{{ p.num_compra.num_compra }}</td>
+                <td>{{ p.total }}</td>
+                <td><a href="edicionproveedor/{{p.id}}" class="btn btn-info">Editar</a></td>
+                <td><a href="eliminarproveedor/{{p.id}}" class="btn btn-danger">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

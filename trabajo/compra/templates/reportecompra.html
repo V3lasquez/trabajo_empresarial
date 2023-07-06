@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Reporte de Orden_Compra</title>
+    <style>
+        .table {
+            background-color: #4591B8;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table th, .table td {
+            padding: 8px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte de Orden Compra</h1>
+    <table class="table" style="background-color: #4591B8;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Num_compra</th>
+                <th>Fec_Emis</th>
+                <th>Cantidad</th>
+                <th>Prec_Unit</th>
+                <th>Total</th>
+                <th>Producto</th>
+                <th>Proveedor</th>
+                <th>Empleado</th>
+                <th colspan="2">opciones de manejo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in compras %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.num_compra }}</td>
+                <td>{{ c.fec_emision }}</td>
+                <td>{{ c.cantidad }}</td>
+                <td>{{ c.prec_unitario }}</td>
+                <td>{{ c.total}}</td>
+                <td>{{ c.producto }}</td>
+                <td>{{ c.proveedor }}</td>
+                <td>{{ c.empleado }}</td>
+                <td><a href="edicioncompra/{{c.id}}" class="btn btn-info">Editar</a></td>
+                <td><a href="eliminarcompra/{{c.id}}" class="btn btn-danger">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

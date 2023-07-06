@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+
+{% block title %}Gestión de Pagos{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Ingreso de Pagos</h2>
+        <a href="{% url 'reporte_pago' %}">Descargar reporte PDF</a>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarpago" method="POST" id="pagoForm">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="txtid" placeholder="ID" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" name="txtfec_pago" placeholder="fecha" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="txtdescuento" placeholder="descuento" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtmet_pago" placeholder="metodo de pago" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <select name="txtnum_compra" class="form-control" onchange="updateTotal()">
+                            {% for ordencompra in ordencompras %}
+                                <option value="{{ ordencompra.id }}" data-total="{{ ordencompra.total }}">{{ ordencompra.num_compra }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txttotal" id="txttotal" placeholder="total" class="form-control" readonly>
+                    </div>                    
+                    <button type="submit" class="btn btn-success form-control">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTotal() {
+            var numCompraSelect = document.querySelector('select[name="txtnum_compra"]');
+            var totalInput = document.getElementById('txttotal');
+            
+            var selectedOption = numCompraSelect.options[numCompraSelect.selectedIndex];
+            var total = selectedOption.getAttribute('data-total');
+            
+            if (total !== null) {
+                totalInput.value = total;
+            } else {
+                totalInput.value = '';
+            }
+        }
+    </script>
+
+    <div class="col-sm-12 col-md-6  col-xl-8 col-xl-8">
+        <h2>Lista de Pagos</h2>
+        <table class="table" style="background-color: #4591B8;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fec_pago</th>
+                    <th>desc</th>
+                    <th>met_pago</th>
+                    <th>num_compra</th>
+                    <th>Total</th>
+                    <th colspan="2">opciones de manejo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pagos %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.fec_pago }}</td>
+                    <td>{{ p.descuento }}</td>
+                    <td>{{ p.met_pago }}</td>
+                    <td>{{ p.num_compra.num_compra }}</td>
+                    <td>{{ p.total }}</td>
+                    <td><a href="edicionpago/{{p.id}}" class="btn btn-info">Editar</a></td>
+                    <td><a href="eliminarpago/{{p.id}}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

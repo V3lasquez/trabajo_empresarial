@@ -1,0 +1,98 @@
+{% extends './base.html' %}
+
+{% block title %}Gestión de Compra{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Ingreso de Compra</h2>
+        <a href="{% url 'reporte_compra' %}">Descargar reporte PDF</a>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarordencompra" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="number" name="txtid" placeholder="ID" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtnum_compra" placeholder="Num de compra" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" name="txtfec_emision" placeholder="fec_emision" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="txtcantidad" placeholder="cantidad" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="txtprec_unitario" placeholder="precio_unidad" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="txttotal" placeholder="total" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <select name="txtproducto" class="form-control">
+                            {% for producto in productos %}
+                                <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="txtproveedor" class="form-control">
+                            {% for proveedor in proveedores %}
+                                <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="txtempleado" class="form-control">
+                            {% for empleado in empleados %}
+                                <option value="{{ empleado.id }}">{{ empleado.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success form-control">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h2>Lista de Compra</h2>
+        <table class="table" style="background-color: #4591B8;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Num_compra</th>
+                    <th>Fec_Emis</th>
+                    <th>Cantidad</th>
+                    <th>Prec_Unit</th>
+                    <th>Total</th>
+                    <th>Producto</th>
+                    <th>Proveedor</th>
+                    <th>Empleado</th>
+                    <th colspan="2">opciones de manejo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in compras %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.num_compra }}</td>
+                    <td>{{ c.fec_emision }}</td>
+                    <td>{{ c.cantidad }}</td>
+                    <td>{{ c.prec_unitario }}</td>
+                    <td>{{ c.total}}</td>
+                    <td>{{ c.producto }}</td>
+                    <td>{{ c.proveedor }}</td>
+                    <td>{{ c.empleado }}</td>
+                    <td><a href="edicioncompra/{{c.id}}" class="btn btn-info">Editar</a></td>
+                    <td><a href="eliminarcompra/{{c.id}}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends './base.html' %}
+
+{% block title %}Gestión de Empleados{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Ingreso de Empleados</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarempleado" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="txtid" placeholder="ID" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtnombre" placeholder="Nombre" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtapellido" placeholder="Apellidos" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtdireccion" placeholder="Direccion" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtdni" placeholder="DNI" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="txtemail" placeholder="example@.com" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success form-control">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6  col-xl-8 col-xl-8">
+        <h2>Lista de Empleados</h2>
+        <table class="table" style="background-color: #4591B8;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Direccion</th>
+                    <th>DNI</th>
+                    <th>Email</th>
+                    <th colspan="2">opciones de manejo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in empleados %}
+                <tr>
+                    <td>{{ e.id }}</td>
+                    <td>{{ e.nombre }}</td>
+                    <td>{{ e.apellido }}</td>
+                    <td>{{ e.direccion }}</td>
+                    <td>{{ e.dni }}</td>
+                    <td>{{ e.email }}</td>
+                    <td><a href="edicionempleado/{{e.id}}" class="btn btn-info">Editar</a></td>
+                    <td><a href="eliminarempleado/{{e.id}}" class="btn btn-danger">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
